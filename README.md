@@ -1,6 +1,6 @@
 # Vision LLM Evaluation Study
 
-A benchmark of two production LLMs on image recognition for three iOS apps, measuring quality, latency and cost to choose models per app.
+A benchmark of two production LLMs on image recognition for 10 iOS scanner apps, measuring quality, latency and cost to choose models per app.
 
 **Status:** completed study.
 
@@ -19,13 +19,13 @@ flowchart LR
   RUB[Rubric scores] --> SQL
   JSONL --> SQL[DuckDB SQL join]
   SQL --> STATS[Pass rate, latency, cost per 1,000 calls]
-  STATS --> CI[Wilson confidence intervals]
+  STATS --> CI[Paired bootstrap CI, 20,000 resamples]
   CI --> ROUTE[Per-app model routing]
 ```
 
 - 2 production LLMs, 64 cases, 160 graded API calls
 - Raw JSONL responses joined with rubric scores in DuckDB SQL
-- Pass rate, latency and cost reported with Wilson confidence intervals, which suit small samples
+- Pass rate, latency and cost reported with a paired bootstrap confidence interval (20,000 resamples); Wilson intervals were used in the 30-call pilot
 
 ## Results
 
